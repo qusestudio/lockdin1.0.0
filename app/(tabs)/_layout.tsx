@@ -1,35 +1,39 @@
-import { Tabs } from 'expo-router';
+import {Tabs} from 'expo-router';
 import React from 'react';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import {HapticTab} from '@/components/haptic-tab';
+import {Colors} from '@/constants/theme';
+import {useColorScheme} from '@/hooks/use-color-scheme';
+import {View} from "react-native";
+import {HugeiconsIcon} from "@hugeicons/react-native";
+import {DashboardSquare03Icon} from "@hugeicons/core-free-icons";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme();
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <Tabs
+            screenOptions={{
+                tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+                headerShown: false,
+                tabBarButton: HapticTab,
+            }}>
+            <Tabs.Screen
+                name="index"
+                options={{
+                    title: 'Rooms',
+                    tabBarLabelStyle: {fontFamily: 'Geist'},
+                    tabBarIcon: ({color}) => (
+                        <View>
+                            <HugeiconsIcon icon={DashboardSquare03Icon} size={24} />
+                        </View>
+                    ),
+                }}
+            />
+        </Tabs>
+    );
+}
+
+const styles = {
+
 }

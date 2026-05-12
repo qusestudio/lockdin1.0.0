@@ -1,84 +1,67 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {Animated, FlatList, StyleSheet, Text, View} from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import {SafeAreaView} from "react-native-safe-area-context";
+import ScrollView = Animated.ScrollView;
+import SearchBar from "@/components/search-bar";
+import RoomCard from "@/components/room-card";
+
+interface Room {
+  id: string
+  subject: string
+  grade: string
+}
+
+const rooms: Room[] = [
+  { id: '1', subject: 'Pure Mathematics', grade: 'Grade 10' },
+  { id: '2', subject: 'Life Sciences', grade: 'Grade 10' },
+  { id: '3', subject: 'Physical Sciences', grade: 'Grade 10' },
+  { id: '4', subject: 'English Home Language', grade: 'Grade 10' },
+  { id: '5', subject: 'History', grade: 'Grade 11' },
+  { id: '6', subject: 'Geography', grade: 'Grade 12' },
+]
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+
+
+  return (
+      <SafeAreaView style={styles.safeAreaContainer}>
+          <View style={{ flexDirection: 'row', alignItems: 'flex-start', padding: 2 }}>
+            <Text style={{ fontFamily: "DT Getai Grotesk Display Black", fontSize: 25 }}>
+              Lockdin
+            </Text>
+            <Text style={{  fontSize: 18, marginTop: -2, fontFamily: "DT Getai Grotesk Display Black" }}>®</Text>
+          </View>
+          <SearchBar />
+          <View style={{ marginTop: 20 }}>
+            <Text style={{fontFamily: "Geist", fontSize: 15}}>Rooms</Text>
+            <FlatList
+                data={rooms}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                    <RoomCard
+                        subject={item.subject}
+                        grade={item.grade}
+                        onJoin={() => console.log(`Joined ${item.subject}`)}
+                    />
+                )}
+                contentContainerStyle={styles.list}
+                showsVerticalScrollIndicator={false}
+            />
+          </View>
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  list: {
+    paddingVertical: 10,
+  },
+  safeAreaContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
