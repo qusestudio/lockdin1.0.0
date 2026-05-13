@@ -4,41 +4,178 @@ import {
     NativeScrollEvent
 } from 'react-native'
 import {useEffect, useRef, useState} from 'react'
-import { useRouter } from 'expo-router'
+import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Image} from "expo-image";
 
-const { width } = Dimensions.get('window')
+const {width} = Dimensions.get('window')
+
+const styles = StyleSheet.create({
+    container: {
+        height: "100%",
+        backgroundColor: '#fff',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    wordmark: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        paddingHorizontal: 24,
+        paddingTop: 16,
+        paddingBottom: 8,
+        fontFamily: "DT Getai Grotesk Display Black",
+    },
+    logo: {
+        fontSize: 32,
+        fontFamily: 'DT Getai Display Black',
+        color: '#000',
+    },
+    logoSup: {
+        fontSize: 12,
+        color: '#000',
+        marginTop: 6,
+    },
+    slide: {
+        width,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imagePlaceholder: {
+        width: 200,
+        height: 200,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    placeholderText: {
+        color: '#9E9E9E',
+        fontFamily: 'Geist',
+        fontSize: 14,
+    },
+    slideText: {
+        fontSize: 30,
+        textAlign: 'center',
+        color: '#000',
+        fontFamily: "DT Getai Grotesk Display Black",
+        lineHeight: 28,
+        paddingVertical: 8,
+    },
+    dots: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 6,
+        marginBottom: 12,
+    },
+    dot: {
+        height: 8,
+        borderRadius: 4,
+    },
+    buttons: {
+        paddingHorizontal: 24,
+        paddingBottom: 24,
+        gap: 12,
+    },
+    primaryBtn: {
+        backgroundColor: '#00FF11',
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderStyle: 'solid',
+        borderWidth: 1,
+        alignItems: 'center',
+    },
+    primaryText: {
+        color: '#000',
+        fontSize: 16,
+        fontFamily: 'Geist Medium',
+    },
+    secondaryBtn: {
+        borderRadius: 30,
+        paddingVertical: 16,
+        alignItems: 'center',
+    },
+    secondaryText: {
+        color: '#000',
+        fontSize: 16,
+        paddingHorizontal: 20,
+        textDecorationLine: 'underline',
+        fontFamily: 'Geist Medium',
+    },
+})
 
 const SLIDES = [
     {
         id: '1',
-        image: require('../assets/images/Carousel-1.svg'), // replace with require('../assets/images/slide1.png')
-        text: 'Studying is easier when someone\'s watching.',
+        image: require('../assets/images/Carousel-1.svg'),
+        color: "#D089FF",
+        text: (
+            <Text style={styles.slideText}>
+                Studying is easier{'\n'}when someone&#39;s{'\n'}
+                <Text style={{color: "#D089FF"}}>
+                    watching
+                </Text>.
+            </Text>
+        ),
     },
     {
         id: '2',
-        image: require('../assets/images/Carousel-2.svg'), // replace with require('../assets/images/slide2.png')
-        text: 'Your grade. Your subjects. Your people. Live.',
+        image: require('../assets/images/Carousel-2.svg'),
+        color: "#11A11B",
+        text: (
+            <Text style={styles.slideText}>
+                Your grade.{'\n'}Your subjects.{'\n'}Your people.
+                <Text style={{color: "#11A11B"}}>
+                    {" "}Live
+                </Text>.
+            </Text>
+        ),
     },
     {
         id: '3',
-        image: require('../assets/images/Carousel-3.svg'), // replace with require('../assets/images/slide3.png')
-        text: 'No chats. No drama. Just focus.',
+        image: require('../assets/images/Carousel-3.svg'),
+        color: "#D5C124",
+        text: (
+            <Text style={styles.slideText}>
+                No chats.{"\n"}No drama.{"\n"}Just
+                <Text style={{color: "#D5C124"}}>
+                    {" "}focus
+                </Text>.
+            </Text>
+        ),
     },
     {
         id: '4',
-        image: require('../assets/images/Carousel-4.svg'), // replace with require('../assets/images/slide4.png')
-        text: 'Every room is a reason to open your books.',
+        image: require('../assets/images/Carousel-4.svg'),
+        color: "#2C7DB7",
+        text: (
+            <Text style={styles.slideText}>
+                Every room is a reason to open {"\n"} your
+                <Text style={{color: "#2C7DB7"}}>
+                    {" "}books
+                </Text>.
+            </Text>
+        ),
     },
     {
         id: '5',
-        image: require('../assets/images/Carousel-5.svg'), // replace with require('../assets/images/slide5.png')
-        text: 'The grind is less lonely when you\'re not the only one.',
+        image: require('../assets/images/Carousel-5.svg'),
+        color: "#F22424",
+        text: (
+            <Text style={styles.slideText}>
+                The grind is less lonely when you&#39;re not
+                <Text style={{color: "#F22424"}}>
+                    {" "}alone
+                </Text>.
+            </Text>
+        ),
     },
 ]
 
-export default function   HomeScreen() {
+export default function HomeScreen() {
     const router = useRouter()
     const [activeIndex, setActiveIndex] = useState(0)
     const scrollX = useRef(new Animated.Value(0)).current
@@ -49,7 +186,7 @@ export default function   HomeScreen() {
     useEffect(() => {
         const interval = setInterval(() => {
             const nextIndex = (activeIndex + 1) % SLIDES.length
-            flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true })
+            flatListRef.current?.scrollToIndex({index: nextIndex, animated: true})
             setActiveIndex(nextIndex)
         }, 3000)
 
@@ -57,8 +194,8 @@ export default function   HomeScreen() {
     }, [activeIndex])
 
     const onScroll = Animated.event(
-        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-        { useNativeDriver: false }
+        [{nativeEvent: {contentOffset: {x: scrollX}}}],
+        {useNativeDriver: false}
     )
 
     const onMomentumScrollEnd = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -70,9 +207,13 @@ export default function   HomeScreen() {
         <SafeAreaView style={styles.container}>
 
             {/* Wordmark */}
-            <View style={styles.wordmark}>
-                <Text style={styles.logo}>Lockdin</Text>
-                <Text style={styles.logoSup}>®</Text>
+            <View style={{flexDirection: 'column', display: 'flex', flex: 1 , justifyContent: 'flex-end', padding: 2, }}>
+                <View style={{flexDirection: 'row', display: 'flex', alignItems: 'flex-end', padding: 2, }}>
+                    <Text style={{fontFamily: "DT Getai Grotesk Display Black", fontSize: 25}}>
+                        Lockdin
+                    </Text>
+                    <Text style={{fontSize: 18, alignSelf: 'flex-start', marginTop: -2, fontFamily: "DT Getai Grotesk Display Black"}}>®</Text>
+                </View>
             </View>
 
             {/* Carousel */}
@@ -91,22 +232,23 @@ export default function   HomeScreen() {
                 onScroll={onScroll}
                 onMomentumScrollEnd={onMomentumScrollEnd}
                 scrollEventThrottle={16}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <View style={styles.slide}>
                         {/* Image placeholder — replace null with require() path */}
                         <Image
                             source={item.image}
                             style={styles.imagePlaceholder}
                         />
-
-                        <Text style={styles.slideText}>{item.text}</Text>
+                        {item.text}
+                        <Text style={{paddingTop: 8, fontFamily: "Geist Medium", opacity: 0.5}}>
+                            Show up. Open your books. Stay accountable.
+                        </Text>
                     </View>
                 )}
             />
-
             {/* Dots */}
             <View style={styles.dots}>
-                {SLIDES.map((_, i) => {
+                {SLIDES.map(({color}, i) => {
                     const opacity = scrollX.interpolate({
                         inputRange: [(i - 1) * width, i * width, (i + 1) * width],
                         outputRange: [0.3, 1, 0.3],
@@ -117,10 +259,13 @@ export default function   HomeScreen() {
                         outputRange: [8, 20, 8],
                         extrapolate: 'clamp',
                     })
+
+                    const isActive = activeIndex === i;
+
                     return (
                         <Animated.View
                             key={i}
-                            style={[styles.dot, { opacity, width: dotWidth }]}
+                            style={[styles.dot, {opacity, width: dotWidth, backgroundColor: isActive ? color : "#D9D9D9"}]}
                         />
                     )
                 })}
@@ -139,7 +284,8 @@ export default function   HomeScreen() {
                     style={styles.secondaryBtn}
                     onPress={() => router.push('/login')}
                 >
-                    <Text style={styles.secondaryText}>Log In</Text>
+                    <Text style={{fontFamily: "Geist"}}>Already have an account?</Text>
+                    <Text style={styles.secondaryText}>Login</Text>
                 </TouchableOpacity>
             </View>
 
@@ -147,95 +293,3 @@ export default function   HomeScreen() {
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    wordmark: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        paddingHorizontal: 24,
-        paddingTop: 16,
-        paddingBottom: 8,
-    },
-    logo: {
-        fontSize: 32,
-        fontFamily: 'DT Getai Display Black',
-        color: '#000',
-    },
-    logoSup: {
-        fontSize: 12,
-        color: '#000',
-        marginTop: 6,
-    },
-    slide: {
-        width,
-        paddingHorizontal: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    imagePlaceholder: {
-        width: 200,
-        height: 200,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 24,
-    },
-    placeholderText: {
-        color: '#9E9E9E',
-        fontFamily: 'Geist',
-        fontSize: 14,
-    },
-    slideText: {
-        fontSize: 20,
-        fontWeight: '700',
-        textAlign: 'center',
-        color: '#000',
-        fontFamily: 'DT Getai Display Black',
-        lineHeight: 28,
-        paddingHorizontal: 8,
-    },
-    dots: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 6,
-        marginTop: 20,
-        marginBottom: 12,
-    },
-    dot: {
-        height: 8,
-        borderRadius: 4,
-        backgroundColor: '#39FF14',
-    },
-    buttons: {
-        paddingHorizontal: 24,
-        paddingBottom: 24,
-        gap: 12,
-    },
-    primaryBtn: {
-        backgroundColor: '#000',
-        borderRadius: 30,
-        paddingVertical: 16,
-        alignItems: 'center',
-    },
-    primaryText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-        fontFamily: 'Geist',
-    },
-    secondaryBtn: {
-        backgroundColor: '#F2F2F2',
-        borderRadius: 30,
-        paddingVertical: 16,
-        alignItems: 'center',
-    },
-    secondaryText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
-        fontFamily: 'Geist',
-    },
-})

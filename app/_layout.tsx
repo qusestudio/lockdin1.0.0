@@ -11,9 +11,15 @@ import {SafeAreaProvider} from "react-native-safe-area-context";
 
 SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-    anchor: '(tabs)',
-};
+
+SplashScreen.setOptions({
+    duration: 300,
+    fade: true,
+});
+
+// export const unstable_settings = {
+//     anchor: '(tabs)',
+// };
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
@@ -24,15 +30,17 @@ export default function RootLayout() {
         "Geist Medium": require("../assets/fonts/Geist-Medium.ttf"),
     });
 
+    const [geistRLoaded, geistRError] = useFonts({
+        "Geist": require("../assets/fonts/Geist-Regular.ttf"),
+    });
+
     useEffect(() => {
-        if (loaded || geistLoaded || geistError || error) {
+        if (loaded || geistLoaded || geistError || error || geistRLoaded || geistRError) {
             SplashScreen.hideAsync();
         }
-    }, [loaded, error, geistLoaded, geistError]);
+    }, [loaded, error, geistLoaded, geistError, geistRError, geistRLoaded]);
 
-    if (!loaded && !error && !geistLoaded && !geistError) {
-        return null;
-    }
+    if (!loaded || !geistLoaded || !geistRLoaded) return null
 
     return (
         <SafeAreaProvider>
