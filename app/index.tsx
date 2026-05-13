@@ -6,33 +6,34 @@ import {
 import {useEffect, useRef, useState} from 'react'
 import { useRouter } from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
+import {Image} from "expo-image";
 
 const { width } = Dimensions.get('window')
 
 const SLIDES = [
     {
         id: '1',
-        image: null, // replace with require('../assets/images/slide1.png')
+        image: require('../assets/images/Carousel-1.svg'), // replace with require('../assets/images/slide1.png')
         text: 'Studying is easier when someone\'s watching.',
     },
     {
         id: '2',
-        image: null, // replace with require('../assets/images/slide2.png')
+        image: require('../assets/images/Carousel-2.svg'), // replace with require('../assets/images/slide2.png')
         text: 'Your grade. Your subjects. Your people. Live.',
     },
     {
         id: '3',
-        image: null, // replace with require('../assets/images/slide3.png')
+        image: require('../assets/images/Carousel-3.svg'), // replace with require('../assets/images/slide3.png')
         text: 'No chats. No drama. Just focus.',
     },
     {
         id: '4',
-        image: null, // replace with require('../assets/images/slide4.png')
+        image: require('../assets/images/Carousel-4.svg'), // replace with require('../assets/images/slide4.png')
         text: 'Every room is a reason to open your books.',
     },
     {
         id: '5',
-        image: null, // replace with require('../assets/images/slide5.png')
+        image: require('../assets/images/Carousel-5.svg'), // replace with require('../assets/images/slide5.png')
         text: 'The grind is less lonely when you\'re not the only one.',
     },
 ]
@@ -93,9 +94,11 @@ export default function   HomeScreen() {
                 renderItem={({ item }) => (
                     <View style={styles.slide}>
                         {/* Image placeholder — replace null with require() path */}
-                        <View style={styles.imagePlaceholder}>
-                            <Text style={styles.placeholderText}>Image goes here</Text>
-                        </View>
+                        <Image
+                            source={item.image}
+                            style={styles.imagePlaceholder}
+                        />
+
                         <Text style={styles.slideText}>{item.text}</Text>
                     </View>
                 )}
@@ -173,10 +176,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imagePlaceholder: {
-        width: width - 48,
-        height: 320,
-        backgroundColor: '#F2F2F2',
-        borderRadius: 20,
+        width: 200,
+        height: 200,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
