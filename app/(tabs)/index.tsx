@@ -1,9 +1,9 @@
-import {Animated, FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {SafeAreaView} from "react-native-safe-area-context";
-import ScrollView = Animated.ScrollView;
 import SearchBar from "@/components/search-bar";
 import RoomCard from "@/components/room-card";
+import {useRouter} from "expo-router";
 
 interface Room {
   id: string
@@ -16,13 +16,18 @@ const rooms: Room[] = [
   { id: '2', subject: 'Life Sciences', grade: 'Grade 10' },
   { id: '3', subject: 'Physical Sciences', grade: 'Grade 10' },
   { id: '4', subject: 'English Home Language', grade: 'Grade 10' },
-  { id: '5', subject: 'History', grade: 'Grade 11' },
-  { id: '6', subject: 'Geography', grade: 'Grade 12' },
+  { id: '5', subject: 'History', grade: 'Grade 10' },
+  { id: '6', subject: 'Geography', grade: 'Grade 10' },
+  { id: '7', subject: 'Information Technology', grade: 'Grade 10' },
+  { id: '8', subject: 'Maths Lit', grade: 'Grade 10' },
+  { id: '9', subject: 'Geography', grade: 'Grade 10' },
+  { id: '10', subject: 'Geography', grade: 'Grade 10' },
+  { id: '11', subject: 'Geography', grade: 'Grade 10' },
+  { id: '12', subject: 'Geography', grade: 'Grade 10' },
 ]
 
-export default function HomeScreen() {
-
-
+export default function DiscoverRoomsScreen() {
+  const router = useRouter();
 
   return (
       <SafeAreaView style={styles.safeAreaContainer}>
@@ -33,16 +38,17 @@ export default function HomeScreen() {
             <Text style={{  fontSize: 18, marginTop: -2, fontFamily: "DT Getai Grotesk Display Black" }}>®</Text>
           </View>
           <SearchBar />
-          <View style={{ marginTop: 20 }}>
-            <Text style={{fontFamily: "Geist", fontSize: 15}}>Rooms</Text>
+          <View>
+            {/*<Text style={{fontFamily: "Geist", fontSize: 15}}>Rooms</Text>*/}
             <FlatList
+                style={styles.list}
                 data={rooms}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <RoomCard
                         subject={item.subject}
                         grade={item.grade}
-                        onJoin={() => console.log(`Joined ${item.subject}`)}
+                        onJoin={() => router.push(`/room/${item.id}`, )}
                     />
                 )}
                 contentContainerStyle={styles.list}
@@ -56,10 +62,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   list: {
     paddingVertical: 10,
+    marginBottom: 90,
   },
   safeAreaContainer: {
     flex: 1,
     padding: 20,
+    gap: 5,
     backgroundColor: "#fff",
   },
   titleContainer: {

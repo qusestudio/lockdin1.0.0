@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         color: '#000',
-        fontFamily: 'Geist SemiBold',
+        fontFamily: 'Geist Medium',
     },
     grade: {
         fontSize: 14,
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#39FF14',
         borderRadius: 20,
-        paddingHorizontal: 20,
-        paddingVertical: 8,
+        paddingHorizontal: 15,
+        paddingVertical: 6 ,
     },
     buttonText: {
         fontSize: 14,

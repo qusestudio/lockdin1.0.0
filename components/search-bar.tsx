@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         paddingHorizontal: 16,
         paddingVertical: 4,
+        marginVertical: 8,
     },
     input: {
         flex: 1,

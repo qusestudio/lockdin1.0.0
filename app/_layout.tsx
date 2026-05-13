@@ -21,8 +21,8 @@ export default function RootLayout() {
         "DT Getai Grotesk Display Black": require("../assets/fonts/DTGetaiGroteskDisplay-Black.ttf"),
     })
     const [geistLoaded, geistError] = useFonts({
-        "Geist": require("../assets/fonts/Geist-Regular.ttf"),
-    })
+        "Geist Medium": require("../assets/fonts/Geist-Medium.ttf"),
+    });
 
     useEffect(() => {
         if (loaded || geistLoaded || geistError || error) {
@@ -38,6 +38,7 @@ export default function RootLayout() {
         <SafeAreaProvider>
             <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
                 <Stack>
+                    <Stack.Screen name="index" options={{headerShown: false}}/>
                     <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
                     <Stack.Screen name="modal" options={{presentation: 'modal', title: 'Modal'}}/>
                 </Stack>
