@@ -34,13 +34,17 @@ export default function RootLayout() {
         "Geist": require("../assets/fonts/Geist-Regular.ttf"),
     });
 
+    const [chillaxLoaded, chillaxError] = useFonts({
+        "Chillax Medium": require("../assets/fonts/Chillax-Medium.otf"),
+    });
+
     useEffect(() => {
-        if (loaded || geistLoaded || geistError || error || geistRLoaded || geistRError) {
+        if (loaded || geistLoaded || geistError || error || geistRLoaded || geistRError || chillaxError || chillaxLoaded) {
             SplashScreen.hideAsync();
         }
-    }, [loaded, error, geistLoaded, geistError, geistRError, geistRLoaded]);
+    }, [loaded, error, geistLoaded, geistError, geistRError, geistRLoaded, chillaxError, chillaxLoaded]);
 
-    if (!loaded || !geistLoaded || !geistRLoaded) return null
+    if (!loaded || !geistLoaded || !geistRLoaded || !chillaxLoaded) return null
 
     return (
         <SafeAreaProvider>

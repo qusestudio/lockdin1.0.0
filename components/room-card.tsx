@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     },
     live: {
         fontSize: 13,
-        fontFamily: 'Geist Medium',
+        fontFamily: 'Chillax Medium',
         color: '#707070',
     }
 })

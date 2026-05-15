@@ -18,19 +18,19 @@ interface Room {
 }
 
 const rooms: Room[] = [
-    {id: '1', subject: 'Pure Mathematics', grade: 'Grade 10', liveStudents: 45},
-    {id: '2', subject: 'Life Sciences', grade: 'Grade 10', liveStudents: 56},
-    {id: '3', subject: 'Physical Sciences', grade: 'Grade 10', liveStudents: 34},
-    {id: '4', subject: 'English Home Language', grade: 'Grade 10', liveStudents: 67},
-    {id: '5', subject: 'History', grade: 'Grade 10', liveStudents: 78},
-    {id: '6', subject: 'Geography', grade: 'Grade 10', liveStudents: 102},
-    {id: '7', subject: 'Information Technology', grade: 'Grade 10', liveStudents: 13},
-    {id: '8', subject: 'Mathematics Literacy', grade: 'Grade 10', liveStudents: 65},
-    {id: '9', subject: 'Geography', grade: 'Grade 10', liveStudents: 90},
-    {id: '10', subject: 'Consumer Studies', grade: 'Grade 10', liveStudents: 40},
-    {id: '11', subject: 'Accounting', grade: 'Grade 10', liveStudents: 42},
-    {id: '12', subject: 'Economics', grade: 'Grade 10', liveStudents: 72},
-    {id: '13', subject: 'Business Studies', grade: 'Grade 10', liveStudents: 50},
+    {id: '1', subject: 'Pure Mathematics', grade: 'Grade 10', liveStudents: 245},
+    {id: '2', subject: 'Life Sciences', grade: 'Grade 10', liveStudents: 156},
+    {id: '3', subject: 'Physical Sciences', grade: 'Grade 10', liveStudents: 434},
+    {id: '4', subject: 'English Home Language', grade: 'Grade 10', liveStudents: 967},
+    {id: '5', subject: 'History', grade: 'Grade 10', liveStudents: 578},
+    {id: '6', subject: 'Geography', grade: 'Grade 10', liveStudents: 1102},
+    {id: '7', subject: 'Information Technology', grade: 'Grade 10', liveStudents: 813},
+    {id: '8', subject: 'Mathematics Literacy', grade: 'Grade 10', liveStudents: 265},
+    {id: '9', subject: 'Geography', grade: 'Grade 10', liveStudents: 790},
+    {id: '10', subject: 'Consumer Studies', grade: 'Grade 10', liveStudents: 1240},
+    {id: '11', subject: 'Accounting', grade: 'Grade 10', liveStudents: 742},
+    {id: '12', subject: 'Economics', grade: 'Grade 10', liveStudents: 872},
+    {id: '13', subject: 'Business Studies', grade: 'Grade 10', liveStudents: 650},
 ]
 
 export default function DiscoverRoomsScreen() {

@@ -13,8 +13,8 @@ export default function PulseDot() {
 
     return (
         <View style={{
-            width: 8,
-            height: 8,
+            width: pulse ? 8 : 6,
+            height: pulse ? 8 : 6,
             borderRadius: 4,
             backgroundColor: '#39FF14',
             opacity: pulse ? 1 : 0.3,
