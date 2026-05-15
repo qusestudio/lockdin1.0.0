@@ -119,7 +119,6 @@ const SignupScreen: React.FC = () => {
         }
     };
 
-
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: '#fff'}}>
             <KeyboardAvoidingView
