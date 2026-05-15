@@ -6,7 +6,7 @@ import {Colors} from '@/constants/theme';
 import {useColorScheme} from '@/hooks/use-color-scheme';
 import {View} from "react-native";
 import {HugeiconsIcon} from "@hugeicons/react-native";
-import {ChartRoseIcon, DashboardSquare03Icon} from "@hugeicons/core-free-icons";
+import {ChartRoseIcon, Home03Icon} from "@hugeicons/core-free-icons";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
@@ -17,21 +17,20 @@ export default function TabLayout() {
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
                 headerShown: false,
                 tabBarButton: HapticTab,
-                tabBarStyle: {backgroundColor: "#fff", height: 80, paddingTop: 10},
+                tabBarStyle: styles.tabBar,
                 tabBarLabelStyle: {fontSize: 12, fontFamily: 'Geist Medium', color: '#000'},
             }}>
             <Tabs.Screen
                 name="index"
                 options={{
-                    title: 'Discover Rooms',
+                    title: '',
                     tabBarIcon: ({focused}) => (
                         <View style={{
                             paddingVertical: 3,
                             paddingHorizontal: 10,
                             borderRadius: 20,
-                            backgroundColor: focused ? "#9EFFA4" : "transparent",
                         }}>
-                            <HugeiconsIcon icon={DashboardSquare03Icon} size={24} />
+                            <HugeiconsIcon fill={focused ? "#000" : "#fff"}  color={focused ? "#fff" : "#000"} icon={Home03Icon} size={35}/>
                         </View>
                     ),
                 }}
@@ -39,15 +38,14 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="me"
                 options={{
-                    title: 'Me',
+                    title: '',
                     tabBarIcon: ({color, focused}) => (
                         <View style={{
                             paddingVertical: 3,
                             paddingHorizontal: 10,
                             borderRadius: 20,
-                            backgroundColor: focused ? "#9EFFA4" : "transparent",
                         }}>
-                            <HugeiconsIcon icon={ChartRoseIcon} size={24} />
+                            <HugeiconsIcon fill={focused ? "#000" : "#fff"} color={focused ? "#fff" : "#000"} icon={ChartRoseIcon} size={35}/>
                         </View>
                     ),
                 }}
@@ -57,9 +55,12 @@ export default function TabLayout() {
 }
 
 const styles = {
-    iconContainer: {
-        paddingVertical: 3,
-        paddingHorizontal: 10,
-        borderRadius: 20,
+    tabBar: {
+        backgroundColor: "#fff",
+        height: 80,
+        paddingTop: 10,
+        borderTopColor: "#fff",
+        // shadowColor: "#fff",
+        elevation: 0,
     }
 }

@@ -8,6 +8,7 @@ export default function SearchBar() {
             <TextInput
                 placeholder="Search subject room..."
                 placeholderTextColor="#9E9E9E"
+                cursorColor={"#333"}
                 style={styles.input}
             />
             <HugeiconsIcon icon={Search01Icon} size={20} color="#9E9E9E" />
@@ -20,10 +21,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#F2F2F2',
-        borderRadius: 12,
+        borderRadius: 50,
         paddingHorizontal: 16,
         paddingVertical: 4,
-        marginVertical: 8,
+        marginTop: 20,
+        marginHorizontal: 20,
     },
     input: {
         flex: 1,

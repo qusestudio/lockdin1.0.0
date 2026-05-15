@@ -205,7 +205,6 @@ export default function HomeScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-
             {/* Wordmark */}
             <View style={{flexDirection: 'column', display: 'flex', flex: 1 , justifyContent: 'flex-end', padding: 2, }}>
                 <View style={{flexDirection: 'row', display: 'flex', alignItems: 'flex-end', padding: 2, }}>
