@@ -1,16 +1,11 @@
 import {
-    View, Text, TouchableOpacity, StyleSheet,
-    Dimensions, Alert, KeyboardAvoidingView, Platform, ScrollView,
+    View, Text, StyleSheet,
+     Alert, KeyboardAvoidingView, Platform, ScrollView,
 } from 'react-native'
 import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
 import LoginForm, {LoginFormData, LoginFormErrors, LoginFormField} from "@/components/login-form";
-import SignupForm, {SignupFormData, SignupFormErrors, SignupFormField} from "@/components/signup-form";
-import GradePickerModal from "@/components/grade-picker-modal";
-
-
-const {width} = Dimensions.get('window')
 
 export default function LoginScreen() {
     const router = useRouter()
@@ -21,7 +16,7 @@ export default function LoginScreen() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const validateForm = (): boolean => {
-        const newErrors: SignupFormErrors = {};
+        const newErrors: LoginFormErrors = {};
         // Phone number validation
         if (!formData.phoneNumber.trim()) {
             newErrors.phoneNumber = 'Phone number is required';
@@ -41,7 +36,7 @@ export default function LoginScreen() {
         setFormData((prev: LoginFormData) => ({ ...prev, [field]: value }));
         // Clear error when user starts typing
         if (errors[field]) {
-            setErrors((prev: SignupFormErrors) => ({ ...prev, [field]: undefined }));
+            setErrors((prev: LoginFormErrors) => ({ ...prev, [field]: undefined }));
         }
     };
 
