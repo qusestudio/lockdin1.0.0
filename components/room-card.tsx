@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import {HugeiconsIcon} from "@hugeicons/react-native";
-import {User03Icon} from "@hugeicons/core-free-icons";
+import {ArrowRight01Icon, User03Icon} from "@hugeicons/core-free-icons";
 import PulseDot from "@/components/pulse-dot";
 
 
@@ -13,7 +13,7 @@ interface RoomCardProps {
 
 export default function RoomCard({ subject, grade, liveStudents, onJoin }: RoomCardProps) {
     return (
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={onJoin}>
             <View style={styles.textContainer}>
 
                 <View style={{alignItems: "center", flexDirection: "row", gap: 5}}>
@@ -30,10 +30,10 @@ export default function RoomCard({ subject, grade, liveStudents, onJoin }: RoomC
                     <PulseDot />
                 </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={onJoin}>
-                <Text style={styles.buttonText}>Join</Text>
-            </TouchableOpacity>
-        </View>
+            <View style={styles.button} >
+                <HugeiconsIcon icon={ArrowRight01Icon} size={15} />
+            </View>
+        </TouchableOpacity>
     )
 }
 
@@ -66,9 +66,10 @@ const styles = StyleSheet.create({
         fontFamily: 'Geist Medium',
     },
     button: {
-        backgroundColor: '#39FF14',
+        borderWidth: 1,
+        borderColor: '#aEaEaE',
         borderRadius: 20,
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
         paddingVertical: 3 ,
     },
     buttonText: {

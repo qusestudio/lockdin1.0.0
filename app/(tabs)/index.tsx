@@ -46,7 +46,7 @@ export default function DiscoverRoomsScreen() {
                         </Text>
                         <Text style={{fontSize: 18, marginTop: -2, fontFamily: "DT Getai Grotesk Display Black"}}>®</Text>
                     </View>
-                    <Text style={{marginTop: -2, fontFamily: "Geist Medium", color: "#333"}}>
+                    <Text style={{marginTop: -2, fontFamily: "Geist Medium", color: "#555"}}>
                         Discover rooms
                     </Text>
                 </View>

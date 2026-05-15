@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         gap: 5,
         paddingHorizontal: 10,
-        overflow: "hidden"
+        overflowY: "hidden",
+        marginRight: 10
     },
     safeAreaContainer: {
         flex: 1,

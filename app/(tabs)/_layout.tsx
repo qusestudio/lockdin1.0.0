@@ -25,13 +25,7 @@ export default function TabLayout() {
                 options={{
                     title: '',
                     tabBarIcon: ({focused}) => (
-                        <View style={{
-                            paddingVertical: 3,
-                            paddingHorizontal: 10,
-                            borderRadius: 20,
-                        }}>
-                            <HugeiconsIcon fill={focused ? "#000" : "#fff"}  color={focused ? "#fff" : "#000"} icon={Home03Icon} size={35}/>
-                        </View>
+                        <HugeiconsIcon style={{elevation: 5, shadowColor: "#444"}} fill={focused ? "#000" : "#fff"}  color={focused ? "#fff" : "#000"} icon={Home03Icon} size={35}/>
                     ),
                 }}
             />

@@ -21,6 +21,7 @@ export default CategoryBadge;
 const styles = {
     textContainer: {
         borderWidth: 1,
+        borderColor: "#ddd",
         borderRadius: 20,
         paddingHorizontal: 10,
         paddingVertical: 5,
