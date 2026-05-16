@@ -8,7 +8,7 @@ interface Category {
 
 const CategoryBadge = ({title, focused}: Category) => {
     return (
-        <View style={[styles.textContainer, focused && {backgroundColor: "#ddd"}]}>
+        <View style={[styles.textContainer, focused && {backgroundColor: "#efe", borderColor: "#00ff11"}]}>
             <Text style={[styles.textLabel, focused && {fontFamily: "Geist Medium"}]}>
                 {title}
             </Text>

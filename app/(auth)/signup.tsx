@@ -100,17 +100,14 @@ const SignupScreen: React.FC = () => {
                 // Simulate API call
                 await new Promise<void>((resolve) => setTimeout(resolve, 2000));
 
-                Alert.alert(
-                    'Success',
-                    'Account created successfully!',
-                    [{ text: 'OK' }]
-                );
-
                 // Here you would typically navigate to another screen or handle authentication
                 console.log('Form data:', formData);
 
                 // Navigate to home screen.
-                router.push('/(tabs)');
+                router.push({
+                    pathname: "/(auth)/verify-otp",
+                    params: {phoneNumber: formData.phoneNumber}
+                });
             } catch (error) {
                 Alert.alert('Error', 'Something went wrong. Please try again.', error as any);
             } finally {

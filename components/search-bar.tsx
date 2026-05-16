@@ -1,15 +1,19 @@
 import { View, TextInput, StyleSheet } from 'react-native'
 import { Search01Icon } from '@hugeicons/core-free-icons'
 import {HugeiconsIcon} from "@hugeicons/react-native";
+import {useState} from "react";
 
 export default function SearchBar() {
+    const [isFocused, setIsFocused] = useState(false)
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, isFocused && {backgroundColor: "#efe", borderColor: "#00ff11", borderWidth: 1}]}>
             <TextInput
                 placeholder="Search subject room..."
                 placeholderTextColor="#9E9E9E"
-                cursorColor={"#333"}
+                cursorColor={"#777"}
                 style={styles.input}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
             />
             <HugeiconsIcon icon={Search01Icon} size={20} color="#9E9E9E" />
         </View>
@@ -32,5 +36,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#000',
         fontFamily: 'Geist',
+
     },
 })

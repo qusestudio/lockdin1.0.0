@@ -6,7 +6,7 @@ const AuthLayout = () => {
         <Stack>
             <Stack.Screen name="login" options={{headerShown: false, animation: "fade"}}/>
             <Stack.Screen name="signup" options={{headerShown: false, animation: "fade"}}/>
-            <Stack.Screen name="otpverify" options={{headerShown: false, animation: "fade"}}/>
+            <Stack.Screen name="verify-otp" options={{headerShown: false, animation: "slide_from_right"}}/>
         </Stack>
     );
 };

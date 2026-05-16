@@ -64,17 +64,14 @@ export default function LoginScreen() {
                 // Simulate API call
                 await new Promise<void>((resolve) => setTimeout(resolve, 2000));
 
-                Alert.alert(
-                    'Success',
-                    'Logged in successfully!',
-                    [{ text: 'OK' }]
-                );
-
                 // Here you would typically navigate to another screen or handle authentication
                 console.log('Form data:', formData);
 
-                // Navigate to home screen.
-                router.push('/(tabs)');
+                // Navigate to opt screen.
+                router.push({
+                    pathname: "/(auth)/verify-otp",
+                    params: {phoneNumber: formData.phoneNumber}
+                });
             } catch (error) {
                 Alert.alert('Error', 'Something went wrong. Please try again.', error as any);
             } finally {
@@ -84,10 +81,10 @@ export default function LoginScreen() {
     };
     return (
         <SafeAreaView style={{ flex: 1 , backgroundColor: '#fff'}}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.container}
-            >
+            {/*<KeyboardAvoidingView*/}
+            {/*    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}*/}
+            {/*    style={styles.container}*/}
+            {/*>*/}
                 <ScrollView
                     contentContainerStyle={styles.scrollContainer}
                     showsVerticalScrollIndicator={false}
@@ -120,7 +117,7 @@ export default function LoginScreen() {
                         />
                     </View>
                 </ScrollView>
-            </KeyboardAvoidingView>
+            {/*</KeyboardAvoidingView>*/}
         </SafeAreaView>
     )
 }
