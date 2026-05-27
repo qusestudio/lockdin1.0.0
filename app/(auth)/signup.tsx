@@ -12,13 +12,15 @@ import SignupForm, {SignupFormData, SignupFormErrors, SignupFormField} from "@/c
 import GradePickerModal from "@/components/grade-picker-modal";
 import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
+import {signup} from "@/app/api/auth";
 
 const SignupScreen: React.FC = () => {
     const [formData, setFormData] = useState<SignupFormData>({
         name: '',
         school: '',
         grade: '',
-        phoneNumber: '',
+        email: ''
+        // phoneNumber: '',
     });
     const [errors, setErrors] = useState<SignupFormErrors>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,16 +54,23 @@ const SignupScreen: React.FC = () => {
             newErrors.grade = 'Please select your grade';
         }
 
-        // Phone number validation
-        if (!formData.phoneNumber.trim()) {
-            newErrors.phoneNumber = 'Phone number is required';
-        } else {
-            // Remove all non-numeric characters for validation
-            const cleanPhone: string = formData.phoneNumber.replace(/[\s()-]/g, '');
-            if (!/^\d{10}$/.test(cleanPhone)) {
-                newErrors.phoneNumber = 'Please enter a valid 10-digit phone number';
-            }
+        // Email validation
+        if (!formData.email.trim()) {
+            newErrors.email = 'Please enter email address';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+            newErrors.email = 'Please enter a valid email address';
         }
+
+        // Phone number validation
+        // if (!formData.phoneNumber.trim()) {
+        //     newErrors.phoneNumber = 'Phone number is required';
+        // } else {
+        //     // Remove all non-numeric characters for validation
+        //     const cleanPhone: string = formData.phoneNumber.replace(/[\s()-]/g, '');
+        //     if (!/^\d{10}$/.test(cleanPhone)) {
+        //         newErrors.phoneNumber = 'Please enter a valid 10-digit phone number';
+        //     }
+        // }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
@@ -69,47 +78,54 @@ const SignupScreen: React.FC = () => {
 
     const handleInputChange = (field: SignupFormField, value: string): void => {
         setFormData((prev: SignupFormData) => ({ ...prev, [field]: value }));
-        // Clear error when user starts typing
+        // Clear error when the user starts typing
         if (errors[field]) {
             setErrors((prev: SignupFormErrors) => ({ ...prev, [field]: undefined }));
         }
     };
 
-    const handlePhoneNumberChange = (text: string): void => {
-        // Format phone number as user types: (123) 456-7890
-        const cleaned: string = text.replace(/\D/g, '');
-        let formatted: string = cleaned;
+    // const handlePhoneNumberChange = (text: string): void => {
+    //     // Format phone number as user types: (123) 456-7890
+    //     const cleaned: string = text.replace(/\D/g, '');
+    //     let formatted: string = cleaned;
+    //
+    //     if (cleaned.length > 0) {
+    //         if (cleaned.length <= 3) {
+    //             formatted = `(${cleaned}`;
+    //         } else if (cleaned.length <= 6) {
+    //             formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
+    //         } else {
+    //             formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
+    //         }
+    //     }
+    //
+    //     handleInputChange('email', formatted);
+    // };
 
-        if (cleaned.length > 0) {
-            if (cleaned.length <= 3) {
-                formatted = `(${cleaned}`;
-            } else if (cleaned.length <= 6) {
-                formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
-            } else {
-                formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
-            }
-        }
-
-        handleInputChange('phoneNumber', formatted);
-    };
-
-    const handleSignUp = async (): Promise<void> => {
+    const handleSignUp = async ()=> {
+        console.log("Signing up...")
         if (validateForm()) {
             setIsLoading(true);
             try {
-                // Simulate API call
-                await new Promise<void>((resolve) => setTimeout(resolve, 2000));
+                // Signup student
+                await signup({
+                    fullName: formData.name,
+                    schoolName: formData.school,
+                    grade: formData.grade,
+                    email: formData.email
+                });
 
                 // Here you would typically navigate to another screen or handle authentication
                 console.log('Form data:', formData);
 
-                // Navigate to home screen.
+                // Navigate to the home screen.
                 router.push({
                     pathname: "/(auth)/verify-otp",
-                    params: {phoneNumber: formData.phoneNumber}
+                    params: {email: formData.email}
                 });
             } catch (error) {
-                Alert.alert('Error', 'Something went wrong. Please try again.', error as any);
+                console.error('Signup error:', error);
+                Alert.alert('Error', 'Something went wrong. Please try again.');
             } finally {
                 setIsLoading(false);
             }
@@ -147,7 +163,7 @@ const SignupScreen: React.FC = () => {
                         <SignupForm
                             formData={formData}
                             handleInputChange={handleInputChange}
-                            handlePhoneNumberChange={handlePhoneNumberChange}
+                            // handlePhoneNumberChange={handlePhoneNumberChange}
                             handleSignUp={handleSignUp}
                             isLoading={isLoading}
                             errors={errors}

@@ -3,20 +3,21 @@ import {useRouter} from "expo-router";
 import {ActivityIndicator, Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import InputField from "@/components/input-field";
 import React from "react";
+import {SignupFormField} from "@/components/signup-form";
 
 export interface LoginFormData {
-    phoneNumber: string;
+    email: string;
 }
 
 export type LoginFormField = keyof LoginFormData;
 
 export interface LoginFormErrors {
-    phoneNumber?: string;
+    email?: string;
 }
 
 interface LoginFormProps {
     formData: LoginFormData;
-    handlePhoneNumberChange: (text: string) => void;
+    handleInputChange: (field: LoginFormField, value: string) => void;
     handleLogin: () => void;
     isLoading: boolean;
     errors: LoginFormErrors;
@@ -24,23 +25,23 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({
-                        formData,
-                        handlePhoneNumberChange,
-                        handleLogin,
-                        isLoading,
-                        errors,
-                        isFormValid
-                    }: LoginFormProps) => {
+                       formData,
+                       handleInputChange,
+                       handleLogin,
+                       isLoading,
+                       errors,
+                       isFormValid
+                   }: LoginFormProps) => {
     const router = useRouter();
     return (
         <View style={styles.formContainer}>
             <InputField
-                label="Phone Number"
-                value={formData.phoneNumber}
-                onChangeText={handlePhoneNumberChange}
-                error={errors.phoneNumber}
-                placeholder="(123) 456-7890"
-                keyboardType="phone-pad"
+                label="Email"
+                value={formData.email}
+                onChangeText={(text: string) => handleInputChange('email', text)}
+                error={errors.email}
+                placeholder="example@domain.com"
+                keyboardType="email-address"
             />
 
             <View style={{display: "flex", gap: 5}}>
@@ -59,7 +60,7 @@ const LoginForm = ({
 
                 {/* Login Link */}
                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>Don&#39;t have an acount? </Text>
+                    <Text style={styles.footerText}>Don&#39;t have an account? </Text>
                     <TouchableOpacity onPress={() => router.push("/(auth)/signup")}>
                         <Text style={styles.loginLink}>Sign up</Text>
                     </TouchableOpacity>

@@ -8,14 +8,16 @@ export interface SignupFormData {
     name: string;
     school: string;
     grade: string;
-    phoneNumber: string;
+    email: string;
+    // phoneNumber: string;
 }
 
 export interface SignupFormErrors {
     name?: string;
     school?: string;
     grade?: string;
-    phoneNumber?: string;
+    email?: string;
+    // phoneNumber?: string;
 }
 
 export type SignupFormField = keyof SignupFormData;
@@ -23,7 +25,7 @@ export type SignupFormField = keyof SignupFormData;
 interface SignupFormProps {
     formData: SignupFormData;
     handleInputChange: (field: SignupFormField, value: string) => void;
-    handlePhoneNumberChange: (text: string) => void;
+    // handlePhoneNumberChange: (text: string) => void;
     handleSignUp: () => void;
     isLoading: boolean;
     errors: SignupFormErrors;
@@ -34,7 +36,7 @@ interface SignupFormProps {
 const SignupForm = ({
                         formData,
                         handleInputChange,
-                        handlePhoneNumberChange,
+                        // handlePhoneNumberChange,
                         handleSignUp,
                         isLoading,
                         errors,
@@ -73,13 +75,22 @@ const SignupForm = ({
             />
 
             <InputField
-                label="Phone Number"
-                value={formData.phoneNumber}
-                onChangeText={handlePhoneNumberChange}
-                error={errors.phoneNumber}
-                placeholder="(123) 456-7890"
-                keyboardType="phone-pad"
+                label="Email"
+                value={formData.email}
+                onChangeText={(text: string) => handleInputChange('email', text)}
+                error={errors.email}
+                placeholder="Email address"
+                keyboardType="email-address"
             />
+
+            {/*<InputField*/}
+            {/*    label="Phone Number"*/}
+            {/*    value={formData.phoneNumber}*/}
+            {/*    onChangeText={handlePhoneNumberChange}*/}
+            {/*    error={errors.phoneNumber}*/}
+            {/*    placeholder="(123) 456-7890"*/}
+            {/*    keyboardType="phone-pad"*/}
+            {/*/>*/}
 
             <View style={{display: "flex", gap: 5}}>
                 {/* Sign Up Button */}

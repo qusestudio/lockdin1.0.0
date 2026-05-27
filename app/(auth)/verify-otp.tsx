@@ -1,20 +1,17 @@
 import {
     View, Text, StyleSheet,
-    Alert, KeyboardAvoidingView, Platform, ScrollView, ActivityIndicator, Pressable, TouchableOpacity,
+    Alert, ScrollView, ActivityIndicator, Pressable, TouchableOpacity,
 } from 'react-native'
 import {useLocalSearchParams, useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
 
-import {LoginFormData, LoginFormErrors, LoginFormField} from "@/components/login-form";
 import {OtpInput} from "react-native-otp-entry";
+import {verifyOtp} from "@/app/api/auth";
 
 export default function VerifyOTPScreen() {
-    const {phoneNumber} = useLocalSearchParams<{ phoneNumber: string }>()
-    const router = useRouter()
-    const [formData, setFormData] = useState<LoginFormData>({
-        phoneNumber: '',
-    });
+    const {email} = useLocalSearchParams<{ email: string }>();
+    const router = useRouter();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [otp, setOTP] = useState<string>()
     const [verifiable, setVerifiable] = useState<boolean>(false);
@@ -22,8 +19,10 @@ export default function VerifyOTPScreen() {
     const handleVerify = async (): Promise<void> => {
         setIsLoading(true);
         try {
-            // Simulate API call
-            await new Promise<void>((resolve) => setTimeout(resolve, 2000));
+            await verifyOtp({
+                email: email,
+                code: otp!
+            })
             console.log('OTP:', otp);
 
             // Navigate to opt screen.
@@ -71,7 +70,7 @@ export default function VerifyOTPScreen() {
                         {/* Header */}
                         <View style={styles.header}>
                             <Text style={{fontFamily: "Geist Medium", fontSize: 22}}>Almost there.</Text>
-                            <Text style={styles.subtitle}>We sent a 6-digit code to {phoneNumber}. {"\n"} Enter it
+                            <Text style={styles.subtitle}>We sent a 6-digit code to {"\n"} {email}. {"\n"} Enter it
                                 below. </Text>
                         </View>
 
