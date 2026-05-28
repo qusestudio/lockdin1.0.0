@@ -1,5 +1,3 @@
-import { User } from '@/src/types/user';
-
 export interface SignupRequest {
     fullName: string;
     schoolName: string;
@@ -19,10 +17,4 @@ export interface VerifyOtpRequest {
 export interface AuthTokens {
     accessToken: string;
     refreshToken: string;
-}
-
-export interface VerifyOtpResponse {
-    accessToken: string;
-    refreshToken: string;
-    user: User;
 }

@@ -4,12 +4,12 @@ import {StatusBar} from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import {useColorScheme} from '@/hooks/use-color-scheme';
-import {useCallback, useRef} from "react";
+import {useFonts} from "expo-font";
+import {useEffect} from "react";
 import * as SplashScreen from 'expo-splash-screen';
 import {SafeAreaProvider} from "react-native-safe-area-context";
-import {View} from "react-native";
 
-SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.preventAutoHideAsync();
 
 
 SplashScreen.setOptions({
@@ -23,30 +23,40 @@ SplashScreen.setOptions({
 
 export default function RootLayout() {
     const colorScheme = useColorScheme();
-    const splashHidden = useRef(false);
+    const [loaded, error] = useFonts({
+        "DT Getai Grotesk Display Black": require("../assets/fonts/DTGetaiGroteskDisplay-Black.ttf"),
+    })
+    const [geistLoaded, geistError] = useFonts({
+        "Geist Medium": require("../assets/fonts/Geist-Medium.ttf"),
+    });
 
-    const onLayoutRootView = useCallback(() => {
-        if (splashHidden.current) {
-            return;
+    const [geistRLoaded, geistRError] = useFonts({
+        "Geist": require("../assets/fonts/Geist-Regular.ttf"),
+    });
+
+    const [chillaxLoaded, chillaxError] = useFonts({
+        "Chillax Medium": require("../assets/fonts/Chillax-Medium.otf"),
+    });
+
+    useEffect(() => {
+        if (loaded || geistLoaded || geistError || error || geistRLoaded || geistRError || chillaxError || chillaxLoaded) {
+            SplashScreen.hideAsync();
         }
+    }, [loaded, error, geistLoaded, geistError, geistRError, geistRLoaded, chillaxError, chillaxLoaded]);
 
-        splashHidden.current = true;
-        SplashScreen.hideAsync().catch(() => {});
-    }, []);
+    if (!loaded || !geistLoaded || !geistRLoaded || !chillaxLoaded) return null
 
     return (
-        <View style={{flex: 1}} onLayout={onLayoutRootView}>
-            <SafeAreaProvider>
-                <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                    <Stack>
-                        <Stack.Screen name="(auth)" options={{headerShown: false}}/>
-                        <Stack.Screen name="index" options={{headerShown: false}}/>
-                        <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-                        <Stack.Screen name="modal" options={{presentation: 'modal', title: 'Modal'}}/>
-                    </Stack>
-                    <StatusBar style="auto"/>
-                </ThemeProvider>
-            </SafeAreaProvider>
-        </View>
+        <SafeAreaProvider>
+            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                <Stack>
+                    <Stack.Screen name="(auth)" options={{headerShown: false}}/>
+                    <Stack.Screen name="index" options={{headerShown: false}}/>
+                    <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+                    <Stack.Screen name="modal" options={{presentation: 'modal', title: 'Modal'}}/>
+                </Stack>
+                <StatusBar style="auto"/>
+            </ThemeProvider>
+        </SafeAreaProvider>
     );
 }

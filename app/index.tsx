@@ -4,11 +4,9 @@ import {
     NativeScrollEvent
 } from 'react-native'
 import {useEffect, useRef, useState} from 'react'
-import {Redirect, useRouter} from 'expo-router'
+import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
 import {Image} from "expo-image";
-import {useAuthStore} from "@/src/stores/authStore";
-import {useAuthHydration} from "@/src/hooks/use-auth-hydration";
 
 const {width} = Dimensions.get('window')
 
@@ -181,8 +179,6 @@ export default function HomeScreen() {
     const router = useRouter()
     const [activeIndex, setActiveIndex] = useState(0)
     const scrollX = useRef(new Animated.Value(0)).current
-    const isAuthHydrated = useAuthHydration();
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
     const flatListRef = useRef<FlatList>(null)
 
@@ -196,10 +192,6 @@ export default function HomeScreen() {
 
         return () => clearInterval(interval)
     }, [activeIndex])
-
-    if (isAuthHydrated && isAuthenticated) {
-        return <Redirect href="/(tabs)"/>;
-    }
 
     const onScroll = Animated.event(
         [{nativeEvent: {contentOffset: {x: scrollX}}}],

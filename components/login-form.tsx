@@ -1,9 +1,9 @@
 // Type definitions
 import {useRouter} from "expo-router";
 import {ActivityIndicator, Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import InputField from "@/src/components/input-field";
+import InputField from "@/components/input-field";
 import React from "react";
-import {SignupFormField} from "@/src/components/signup-form";
+import {SignupFormField} from "@/components/signup-form";
 
 export interface LoginFormData {
     email: string;

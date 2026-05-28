@@ -5,8 +5,8 @@ import {
 import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
-import LoginForm, {LoginFormData, LoginFormErrors, LoginFormField} from "@/src/components/login-form";
-import {login} from "@/src/api/auth";
+import LoginForm, {LoginFormData, LoginFormErrors, LoginFormField} from "@/components/login-form";
+import {login} from "@/app/api/auth";
 
 export default function LoginScreen() {
     const router = useRouter()

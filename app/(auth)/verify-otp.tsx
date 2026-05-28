@@ -7,32 +7,25 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import React, {useState} from "react";
 
 import {OtpInput} from "react-native-otp-entry";
-import {verifyOtp} from "@/src/api/auth";
-import {useAuthStore} from "@/src/stores/authStore";
+import {verifyOtp} from "@/app/api/auth";
 
 export default function VerifyOTPScreen() {
     const {email} = useLocalSearchParams<{ email: string }>();
     const router = useRouter();
-    const setAuth = useAuthStore((state) => state.setAuth);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [otp, setOTP] = useState<string>()
     const [verifiable, setVerifiable] = useState<boolean>(false);
 
-    const handleVerify = async ()  => {
+    const handleVerify = async (): Promise<void> => {
         setIsLoading(true);
         try {
-            const response = await verifyOtp({
+            await verifyOtp({
                 email: email,
                 code: otp!
             })
             console.log('OTP:', otp);
 
-            console.log('Response:', response);
-
-            // Store auth tokens and user data
-            setAuth(response.accessToken, response.refreshToken, response.user);
-
-            // Navigate to tabs screen
+            // Navigate to opt screen.
             router.replace('/(tabs)');
         } catch (error) {
             Alert.alert('Error', 'Something went wrong. Please try again.', error as any);

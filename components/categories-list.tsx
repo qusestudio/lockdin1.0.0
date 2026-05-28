@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from "react-native";
-import CategoryBadge from "@/src/components/category-badge";
+import CategoryBadge from "@/components/category-badge";
 
 interface Category {
     id: string
