@@ -1,6 +1,6 @@
 import React from 'react';
 import {FlatList, Text, Modal, StyleSheet, TouchableOpacity, View} from "react-native";
-import {SignupFormData} from "@/components/signup-form";
+import {SignupFormData} from "@/src/components/signup-form";
 import {HugeiconsIcon} from "@hugeicons/react-native";
 import { CheckmarkCircle01Icon} from "@hugeicons/core-free-icons";
 

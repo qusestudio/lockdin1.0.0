@@ -1,15 +1,27 @@
-import {Tabs} from 'expo-router';
+import {Redirect, Tabs} from 'expo-router';
 import React from 'react';
 
-import {HapticTab} from '@/components/haptic-tab';
+import {HapticTab} from '@/src/components/haptic-tab';
 import {Colors} from '@/constants/theme';
 import {useColorScheme} from '@/hooks/use-color-scheme';
 import {View} from "react-native";
 import {HugeiconsIcon} from "@hugeicons/react-native";
 import {ChartRoseIcon, Home03Icon} from "@hugeicons/core-free-icons";
+import {useAuthStore} from "@/src/stores/authStore";
+import {useAuthHydration} from "@/src/hooks/use-auth-hydration";
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
+    const isAuthHydrated = useAuthHydration();
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+    if (!isAuthHydrated) {
+        return null;
+    }
+
+    if (!isAuthenticated) {
+        return <Redirect href="/"/>;
+    }
 
     return (
         <Tabs

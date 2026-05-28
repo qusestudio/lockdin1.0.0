@@ -8,11 +8,11 @@ import {
     Platform,
     Alert,
 } from 'react-native';
-import SignupForm, {SignupFormData, SignupFormErrors, SignupFormField} from "@/components/signup-form";
-import GradePickerModal from "@/components/grade-picker-modal";
+import SignupForm, {SignupFormData, SignupFormErrors, SignupFormField} from "@/src/components/signup-form";
+import GradePickerModal from "@/src/components/grade-picker-modal";
 import {useRouter} from 'expo-router'
 import {SafeAreaView} from "react-native-safe-area-context";
-import {signup} from "@/app/api/auth";
+import {signup} from "@/src/api/auth";
 
 const SignupScreen: React.FC = () => {
     const [formData, setFormData] = useState<SignupFormData>({

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import {HugeiconsIcon} from "@hugeicons/react-native";
 import {ArrowRight01Icon, User03Icon} from "@hugeicons/core-free-icons";
-import PulseDot from "@/components/pulse-dot";
+import PulseDot from "@/src/components/pulse-dot";
 
 
 interface RoomCardProps {
