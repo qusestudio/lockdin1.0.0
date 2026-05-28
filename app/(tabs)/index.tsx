@@ -1,10 +1,10 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {SafeAreaView} from "react-native-safe-area-context";
-import SearchBar from "@/components/search-bar";
-import RoomCard from "@/components/room-card";
+import SearchBar from "@/src/components/search-bar";
+import RoomCard from "@/src/components/room-card";
 import {useRouter} from "expo-router";
-import CategoriesList from "@/components/categories-list";
+import CategoriesList from "@/src/components/categories-list";
 import {HugeiconsIcon} from "@hugeicons/react-native";
 import {
     Menu03Icon,

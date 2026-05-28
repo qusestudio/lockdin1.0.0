@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActivityIndicator, Pressable, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import InputField from "@/components/input-field";
+import InputField from "@/src/components/input-field";
 import {useRouter} from "expo-router";
 
 // Type definitions
