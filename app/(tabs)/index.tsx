@@ -9,6 +9,7 @@ import {HugeiconsIcon} from "@hugeicons/react-native";
 import {
     Menu03Icon,
 } from "@hugeicons/core-free-icons";
+import {useRooms} from "@/src/hooks/useRooms";
 
 interface Room {
     id: string
@@ -35,6 +36,15 @@ const rooms: Room[] = [
 
 export default function DiscoverRoomsScreen() {
     const router = useRouter();
+    const { data, isLoading, isError } = useRooms({});
+
+    if (isLoading) {
+        return <Text>Loading...</Text>;
+    }
+
+    if (isError) {
+        return <Text>Error...</Text>;
+    }
 
     return (
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -75,13 +85,11 @@ export default function DiscoverRoomsScreen() {
                 {/*<Text style={{fontFamily: "Geist", fontSize: 15}}>Rooms</Text>*/}
                 <FlatList
                     style={styles.list}
-                    data={rooms}
+                    data={data}
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => (
                         <RoomCard
-                            subject={item.subject}
-                            grade={item.grade}
-                            liveStudents={item.liveStudents}
+                            room={item}
                             onJoin={() => router.push(`/room/${item.id}`,)}
                         />
                     )}

@@ -2,31 +2,31 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import {HugeiconsIcon} from "@hugeicons/react-native";
 import {ArrowRight01Icon, User03Icon} from "@hugeicons/core-free-icons";
 import PulseDot from "@/src/components/pulse-dot";
+import {Room} from "@/src/api/rooms";
 
 
 interface RoomCardProps {
-    subject: string
-    grade: string
-    liveStudents: number
+    room: Room
     onJoin: () => void
 }
 
-export default function RoomCard({ subject, grade, liveStudents, onJoin }: RoomCardProps) {
+export default function RoomCard({ room, onJoin }: RoomCardProps) {
+    console.log("room", room);
     return (
         <TouchableOpacity style={styles.card} onPress={onJoin}>
             <View style={styles.textContainer}>
 
                 <View style={{alignItems: "center", flexDirection: "row", gap: 5}}>
-                    <Text style={styles.subject}>{subject}</Text>
+                    <Text style={styles.subject}>{room.subject}</Text>
                     <Text style={styles.grade}>
-                        {grade}
+                        Grade {room.grade}
                     </Text>
                 </View>
                 <View style={styles.liveContainer}>
                     <HugeiconsIcon icon={User03Icon} fill={"#aaa"} color={"#aaa"} size={15} />
-                    <Text style={styles.live}>
-                        {liveStudents} Live
-                    </Text>
+                    {/*<Text style={styles.live}>*/}
+                    {/*    {liveStudents} Live*/}
+                    {/*</Text>*/}
                     <PulseDot />
                 </View>
             </View>
