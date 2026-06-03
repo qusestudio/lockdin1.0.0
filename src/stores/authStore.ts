@@ -12,7 +12,7 @@ interface AuthState {
 
 interface AuthActions {
   setAuth: (accessToken: string, refreshToken: string, user: User) => void;
-  clearAuth: () => void;
+    clearAuth: () => void;
   setAccessToken: (token: string) => void;
 }
 

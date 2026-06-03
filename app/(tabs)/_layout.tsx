@@ -1,5 +1,5 @@
-import {Redirect, Tabs} from 'expo-router';
-import React from 'react';
+import {Tabs, useRouter} from 'expo-router';
+import React, {useEffect} from 'react';
 
 import {HapticTab} from '@/src/components/haptic-tab';
 import {Colors} from '@/constants/theme';
@@ -11,16 +11,23 @@ import {useAuthStore} from "@/src/stores/authStore";
 import {useAuthHydration} from "@/src/hooks/use-auth-hydration";
 
 export default function TabLayout() {
+    const router = useRouter();
     const colorScheme = useColorScheme();
     const isAuthHydrated = useAuthHydration();
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+    useEffect(() => {
+        if (isAuthHydrated && !isAuthenticated) {
+            router.replace('/');
+        }
+    }, [isAuthHydrated, isAuthenticated, router]);
 
     if (!isAuthHydrated) {
         return null;
     }
 
     if (!isAuthenticated) {
-        return <Redirect href="/"/>;
+        return null;
     }
 
     return (

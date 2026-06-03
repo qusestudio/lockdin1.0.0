@@ -1,5 +1,5 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 
 import { Collapsible } from '@/src/ui/collapsible';
 import { ExternalLink } from '@/src/components/external-link';
@@ -8,8 +8,18 @@ import { ThemedText } from '@/src/components/themed-text';
 import { ThemedView } from '@/src/components/themed-view';
 import { IconSymbol } from '@/src/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
+import { useAuthStore } from '@/src/stores/authStore';
 
 export default function TabTwoScreen() {
+  const user = useAuthStore((state) => state.user);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
+
+  const handleLogout = () => {
+    console.log("Logging out...");
+    clearAuth();
+  };
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -29,6 +39,13 @@ export default function TabTwoScreen() {
           }}>
           Explore
         </ThemedText>
+      </ThemedView>
+      <ThemedView style={styles.accountContainer}>
+        <ThemedText type="defaultSemiBold">{user?.fullName ?? 'Your account'}</ThemedText>
+        {user?.email ? <ThemedText style={styles.accountEmail}>{user.email}</ThemedText> : null}
+        <Pressable style={styles.logoutButton} onPress={handleLogout}>
+          <ThemedText style={styles.logoutText}>Log out</ThemedText>
+        </Pressable>
       </ThemedView>
       <ThemedText>This app includes example code to help you get started.</ThemedText>
       <Collapsible title="File-based routing">
@@ -108,5 +125,25 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     gap: 8,
+  },
+  accountContainer: {
+    gap: 8,
+    paddingVertical: 12,
+  },
+  accountEmail: {
+    opacity: 0.65,
+  },
+  logoutButton: {
+    alignItems: 'center',
+    borderColor: '#ff3b30',
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  logoutText: {
+    color: '#ff3b30',
+    fontFamily: 'Geist Medium',
   },
 });

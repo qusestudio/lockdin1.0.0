@@ -74,6 +74,7 @@ export default function LoginScreen() {
                     params: {email: formData.email}
                 });
             } catch (error) {
+                // TODO: Handle error properly, when user not found, etc.
                 Alert.alert('Error', 'Something went wrong. Please try again.', error as any);
             } finally {
                 setIsLoading(false);
