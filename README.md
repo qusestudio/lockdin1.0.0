@@ -95,7 +95,7 @@ Lockdin follows a clean layered architecture across both the backend and mobile 
 | Expo SecureStore | Persistent encrypted token storage |
 | Expo Notifications + FCM | Push notification delivery |
 
-### Backend — Rust
+### Backend — Rust [Lockdin Server](https://github.com/thefutureacademysa/lockdin-server)
 | Technology | Purpose |
 |---|---|
 | Actix-web | High-performance async web framework |
