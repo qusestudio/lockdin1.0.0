@@ -23,7 +23,6 @@ The mechanism is simple. Accountability through presence.
 - [Database](#database)
 - [Caching Strategy](#caching-strategy)
 - [Authentication](#authentication)
-- [Contributing](#contributing)
 - [Roadmap](#roadmap)
 
 ---
