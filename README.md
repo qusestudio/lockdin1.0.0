@@ -122,55 +122,6 @@ Lockdin follows a clean layered architecture across both the backend and mobile 
 
 ## Project Structure
 
-### Backend
-
-```
-lockdin-api/
-├── src/
-│   ├── main.rs
-│   ├── config/
-│   │   ├── server.rs          # Actix-web server configuration
-│   │   ├── routes.rs          # Route registration
-│   │   ├── cors.rs            # CORS policy
-│   │   └── state.rs           # AppState — db, redis, jwt_secret
-│   ├── domains/
-│   │   ├── auth/
-│   │   │   ├── mod.rs
-│   │   │   ├── handlers.rs    # signup, login, verify_otp, logout
-│   │   │   ├── service.rs     # business logic, token generation
-│   │   │   ├── repository.rs  # database operations
-│   │   │   └── models.rs      # request/response structs, Claims
-│   │   ├── users/
-│   │   │   ├── mod.rs
-│   │   │   ├── handlers.rs    # get_me, update_profile
-│   │   │   ├── service.rs
-│   │   │   ├── repository.rs
-│   │   │   └── models.rs      # User struct
-│   │   ├── rooms/
-│   │   │   ├── mod.rs
-│   │   │   ├── handlers.rs    # get_rooms, join_room, leave_room
-│   │   │   ├── service.rs     # room logic, cache management
-│   │   │   ├── repository.rs  # postgres queries with full-text search
-│   │   │   └── models.rs      # Room, RoomQueryParams, SubjectCategory
-│   │   └── notifications/
-│   │       ├── mod.rs
-│   │       ├── service.rs     # send_otp_email, send_push_notification
-│   │       └── templates.rs   # email copy and message templates
-│   └── infra/
-│       ├── database.rs        # PostgreSQL pool initialisation
-│       ├── redis.rs           # Redis ConnectionManager initialisation
-│       ├── env_vars.rs        # environment variable loading
-│       └── middleware/
-│           └── auth.rs        # JWT validation middleware, verify_token
-├── migrations/
-│   ├── 001_create_users_table.sql
-│   ├── 002_create_otps_table.sql
-│   ├── 003_create_refresh_tokens_table.sql
-│   ├── 004_create_rooms_table.sql
-│   └── 005_add_rooms_indexes.sql
-└── Cargo.toml
-```
-
 ### Mobile
 
 ```
@@ -238,54 +189,7 @@ lockdin-app/
 
 ---
 
-### Environment Variables
 
-**Backend — create `.env` in the backend root:**
-
-```env
-DATABASE_URL=postgres://username:password@localhost:5432/lockdin
-REDIS_URL=redis://127.0.0.1:6379
-JWT_SECRET=your_jwt_secret_generated_with_openssl_rand_base64_64
-RESEND_API_KEY=your_resend_api_key
-APP_HOST=127.0.0.1
-APP_PORT=8080
-```
-
-Generate your JWT secret:
-```bash
-openssl rand -base64 64
-```
-
-**Mobile — create `.env` in the app root:**
-
-```env
-EXPO_PUBLIC_API_URL=http://10.0.2.2:8080/api
-```
-
-> Note: `10.0.2.2` is the Android emulator's address for `localhost` on the host machine.
-
----
-
-### Running the Backend
-
-```bash
-# Clone the repository
-git clone https://github.com/thefutureacademysa/lockdin1.0.0.git
-cd lockdin1.0.0/backend
-
-# Install dependencies
-cargo build
-
-# Run database migrations
-sqlx migrate run
-
-# Start the development server
-cargo run
-```
-
-The API will be available at `http://127.0.0.1:8080`.
-
----
 
 ### Running the Mobile App
 
