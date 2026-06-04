@@ -11,6 +11,7 @@ export type Room = {
 };
 
 export interface RoomsQueryParams {
+    search?: string;
     grade?: number;
     subjectCategory?: string;
 }
@@ -20,15 +21,15 @@ export const fetchRooms =
         {
             grade,
             subjectCategory,
+            search
         }
         : RoomsQueryParams
     ) => {
-    console.log("fetchRooms", {grade, subjectCategory});
-
         const {data} = await api.get("/rooms", {
             params: {
                 grade,
                 category: subjectCategory,
+                search
             },
         });
 

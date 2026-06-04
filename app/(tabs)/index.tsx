@@ -10,41 +10,24 @@ import {
     Menu03Icon,
 } from "@hugeicons/core-free-icons";
 import {useRooms} from "@/src/hooks/useRooms";
-
-interface Room {
-    id: string
-    subject: string
-    grade: string
-    liveStudents: number
-}
-
-const rooms: Room[] = [
-    {id: '1', subject: 'Pure Mathematics', grade: 'Grade 10', liveStudents: 245},
-    {id: '2', subject: 'Life Sciences', grade: 'Grade 10', liveStudents: 156},
-    {id: '3', subject: 'Physical Sciences', grade: 'Grade 10', liveStudents: 434},
-    {id: '4', subject: 'English Home Language', grade: 'Grade 10', liveStudents: 967},
-    {id: '5', subject: 'History', grade: 'Grade 10', liveStudents: 578},
-    {id: '6', subject: 'Geography', grade: 'Grade 10', liveStudents: 1102},
-    {id: '7', subject: 'Information Technology', grade: 'Grade 10', liveStudents: 813},
-    {id: '8', subject: 'Mathematics Literacy', grade: 'Grade 10', liveStudents: 265},
-    {id: '9', subject: 'Geography', grade: 'Grade 10', liveStudents: 790},
-    {id: '10', subject: 'Consumer Studies', grade: 'Grade 10', liveStudents: 1240},
-    {id: '11', subject: 'Accounting', grade: 'Grade 10', liveStudents: 742},
-    {id: '12', subject: 'Economics', grade: 'Grade 10', liveStudents: 872},
-    {id: '13', subject: 'Business Studies', grade: 'Grade 10', liveStudents: 650},
-]
+import {useEffect, useState} from "react";
 
 export default function DiscoverRoomsScreen() {
     const router = useRouter();
-    const { data, isLoading, isError } = useRooms({});
+    const [search, setSearch] = useState("");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
-    if (isLoading) {
-        return <Text>Loading...</Text>;
-    }
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 300);
 
-    if (isError) {
-        return <Text>Error...</Text>;
-    }
+        return () => clearTimeout(timer);
+    }, [search]);
+
+    const { data, isFetching } = useRooms({
+        search: debouncedSearch,
+    });
 
     return (
         <SafeAreaView style={styles.safeAreaContainer}>
@@ -79,7 +62,10 @@ export default function DiscoverRoomsScreen() {
                 </View>
             </View>
 
-            <SearchBar/>
+            <SearchBar
+                value={search}
+                onChangeText={setSearch}
+            />
             <CategoriesList/>
             <View>
                 {/*<Text style={{fontFamily: "Geist", fontSize: 15}}>Rooms</Text>*/}

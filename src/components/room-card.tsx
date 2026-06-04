@@ -16,8 +16,15 @@ export default function RoomCard({ room, onJoin }: RoomCardProps) {
         <TouchableOpacity style={styles.card} onPress={onJoin}>
             <View style={styles.textContainer}>
 
-                <View style={{alignItems: "center", flexDirection: "row", gap: 5}}>
-                    <Text style={styles.subject}>{room.subject}</Text>
+                <View style={styles.subjectRow}>
+                    <Text
+                        style={styles.subject}
+                        numberOfLines={1}
+                        ellipsizeMode="tail"
+                    >
+                        {room.subject}
+                    </Text>
+
                     <Text style={styles.grade}>
                         Grade {room.grade}
                     </Text>
@@ -38,6 +45,12 @@ export default function RoomCard({ room, onJoin }: RoomCardProps) {
 }
 
 const styles = StyleSheet.create({
+    subjectRow: {
+        backgroundColor: "#00ff11",
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        gap: 5,
+    },
     card: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -47,8 +60,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         marginHorizontal: 0,
         marginBottom: 10,
+        gap: '10%'
     },
     textContainer: {
+        flex: 1,
         gap: 10
     },
     subject: {
