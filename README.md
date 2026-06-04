@@ -95,18 +95,6 @@ Lockdin follows a clean layered architecture across both the backend and mobile 
 | Expo SecureStore | Persistent encrypted token storage |
 | Expo Notifications + FCM | Push notification delivery |
 
-### Backend — Rust [Lockdin Server](https://github.com/thefutureacademysa/lockdin-server)
-| Technology | Purpose |
-|---|---|
-| Actix-web | High-performance async web framework |
-| SQLx | Async type-safe PostgreSQL queries |
-| Redis (`redis-rs`) | In-memory caching and participant counts |
-| jsonwebtoken | JWT generation and validation |
-| Chrono | Timestamp handling |
-| Serde | JSON serialisation and deserialisation |
-| UUID v7 | Time-ordered unique identifiers |
-| Resend | Transactional email — OTP delivery |
-| Tokio | Async runtime |
 
 ### Infrastructure
 | Service | Purpose |
@@ -179,12 +167,8 @@ lockdin-app/
 
 ### Prerequisites
 
-- [Rust](https://rustup.rs/) 1.75+
 - [Node.js](https://nodejs.org/) 18+
-- [SQLx CLI](https://github.com/launchbadge/sqlx) — `cargo install sqlx-cli`
 - [Expo CLI](https://docs.expo.dev/get-started/installation/) — `npm install -g expo-cli`
-- PostgreSQL 15+
-- Redis 7+
 - Android Studio with Android SDK (for mobile development)
 
 ---
@@ -250,95 +234,6 @@ Authorization: Bearer <access_token>
 | `grade` | `integer` | Filter by grade (8–12) |
 | `category` | `string` | Filter by category: `stem`, `commerce`, `humanities`, `creative_arts` |
 | `search` | `string` | Full-text search across room name and subject |
-
----
-
-## Database
-
-Lockdin uses PostgreSQL as the primary relational database via SQLx with compile-time query verification.
-
-### Schema Overview
-
-**users**
-```sql
-id VARCHAR PRIMARY KEY,
-full_name VARCHAR NOT NULL,
-school_name VARCHAR NOT NULL,
-grade VARCHAR NOT NULL,
-email VARCHAR UNIQUE NOT NULL,
-avatar_url VARCHAR,
-is_verified BOOLEAN NOT NULL DEFAULT FALSE,
-created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-```
-
-**rooms**
-```sql
-id VARCHAR PRIMARY KEY,
-name VARCHAR NOT NULL,
-subject VARCHAR NOT NULL,
-grade INT NOT NULL,
-category VARCHAR NOT NULL,
-is_live BOOLEAN NOT NULL DEFAULT FALSE,
-created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-```
-
-**refresh_tokens**
-```sql
-id VARCHAR PRIMARY KEY,
-user_id VARCHAR NOT NULL REFERENCES users(id),
-token VARCHAR NOT NULL,
-expires_at TIMESTAMPTZ NOT NULL,
-created_at TIMESTAMPTZ NOT NULL,
-revoked BOOLEAN NOT NULL DEFAULT FALSE
-```
-
-### Search Indexes
-
-Lockdin uses PostgreSQL full-text search with trigram fallback for fast room discovery:
-
-```sql
--- Full-text search across name and subject
-CREATE INDEX idx_rooms_search ON rooms 
-USING GIN(to_tsvector('english', name || ' ' || subject));
-
--- Trigram indexes for partial matching
-CREATE EXTENSION IF NOT EXISTS pg_trgm;
-CREATE INDEX idx_rooms_name_trgm ON rooms USING GIN(name gin_trgm_ops);
-CREATE INDEX idx_rooms_subject_trgm ON rooms USING GIN(subject gin_trgm_ops);
-```
-
----
-
-## Caching Strategy
-
-Lockdin uses Redis for two distinct purposes:
-
-### Room List Caching
-
-The full rooms list — including live participant counts — is cached in Redis with a 60 second TTL. Cache keys are scoped by filter combination:
-
-```
-rooms:all
-rooms:grade:{grade}
-rooms:grade:{grade}:category:{category}
-rooms:search:{query}
-```
-
-Cache is invalidated on every `join_room` and `leave_room` event to ensure participant counts remain accurate within one cache cycle.
-
-### Live Participant Counts
-
-Participant counts are owned entirely by Redis — not PostgreSQL. Each room has a dedicated key:
-
-```
-room:{room_id}:participants  →  integer
-```
-
-- `INCR` on join — atomic, race condition safe
-- `DECR` on leave — atomic
-- TTL of 86400 seconds (24 hours) — handles disconnected clients
-- PostgreSQL fallback if Redis is unavailable
 
 ---
 
