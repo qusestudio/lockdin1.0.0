@@ -1,18 +1,23 @@
 import React from 'react';
-import {View, Text} from "react-native";
+import {Text, TouchableOpacity} from "react-native";
 
 interface Category {
+    isLast?: boolean;
     title: string;
     focused: boolean;
+    onClick: () => void;
 }
 
-const CategoryBadge = ({title, focused}: Category) => {
+const CategoryBadge = ({title, focused, isLast, onClick}: Category) => {
     return (
-        <View style={[styles.textContainer, focused && {backgroundColor: "#efe", borderColor: "#00ff11"}]}>
+        <TouchableOpacity
+            onPress={onClick}
+            style={[styles.textContainer, focused && {backgroundColor: "#efe", borderColor: "#00ff11"}, isLast && {marginRight: 20}]}
+        >
             <Text style={[styles.textLabel, focused && {fontFamily: "Geist Medium"}]}>
                 {title}
             </Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 

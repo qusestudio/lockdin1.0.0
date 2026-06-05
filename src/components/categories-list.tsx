@@ -5,31 +5,43 @@ import CategoryBadge from "@/src/components/category-badge";
 interface Category {
     id: string
     title: string
-    focused: boolean
 }
 
 const categories: Category[] = [
-    {id: '0', title: "All", focused: true},
-    {id: '1', title: "Stem", focused: false},
-    {id: '2', title: "Commerce", focused: false},
-    {id: '3', title: "Humanities", focused: false},
-    {id: '4', title: "Creative Arts", focused: false},
+    {id: '0', title: "All"},
+    {id: '1', title: "Stem"},
+    {id: '2', title: "Commerce"},
+    {id: '3', title: "Humanities"},
+    {id: '4', title: "Creative Arts"},
 ]
 
-const CategoriesList = () => {
+const CategoriesList = (
+    {
+        selectedCategory,
+        handleClickedCategory
+    }: {
+        selectedCategory: string;
+        handleClickedCategory: (category: string) => void;
+    }
+) => {
     return (
         <View style={{overflow: "hidden"}}>
             <FlatList
                 style={styles.list}
                 data={categories}
+                horizontal
                 keyExtractor={(item) => item.id}
-                renderItem={({item}) => (
-                    <CategoryBadge title={item.title} focused={item.focused} />
+                renderItem={({item, index}) => (
+                    <CategoryBadge
+                        onClick={() => handleClickedCategory(item.title === "All" ? "" : item.title)}
+                        title={item.title}
+                        isLast={index === categories.length - 1}
+                        focused={item.title === "All" ? selectedCategory === "" : selectedCategory === item.title}
+                    />
                 )}
                 contentContainerStyle={styles.list}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
-                scrollIndicatorInsets={{right: Number.MIN_VALUE}}
             />
         </View>
     );
@@ -42,10 +54,10 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         flexDirection: 'row',
-        gap: 5,
         paddingHorizontal: 10,
         overflowY: "hidden",
-        marginRight: 10
+        marginRight: 0,
+        gap: 5
     },
     safeAreaContainer: {
         flex: 1,

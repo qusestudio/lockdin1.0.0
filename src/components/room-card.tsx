@@ -46,7 +46,6 @@ export default function RoomCard({ room, onJoin }: RoomCardProps) {
 
 const styles = StyleSheet.create({
     subjectRow: {
-        backgroundColor: "#00ff11",
         flexDirection: 'column',
         alignItems: 'flex-start',
         gap: 5,
