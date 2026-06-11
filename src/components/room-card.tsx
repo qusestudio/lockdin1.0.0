@@ -11,7 +11,6 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room, onJoin }: RoomCardProps) {
-    console.log("room", room);
     return (
         <TouchableOpacity style={styles.card} onPress={onJoin}>
             <View style={styles.textContainer}>

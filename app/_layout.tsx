@@ -5,7 +5,7 @@ import 'react-native-reanimated';
 import {useCallback, useRef} from "react";
 import * as SplashScreen from 'expo-splash-screen';
 import {View} from "react-native";
-import {Providers} from "@/app/providers";
+import {AppProviders} from "@/src/providers/AppProviders";
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
@@ -31,15 +31,16 @@ const  RootLayout = ()=> {
 
     return (
         <View style={{flex: 1}} onLayout={onLayoutRootView}>
-            <Providers>
+            <AppProviders>
                 <Stack>
                     <Stack.Screen name="(auth)" options={{headerShown: false}}/>
                     <Stack.Screen name="index" options={{headerShown: false}}/>
                     <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
                     <Stack.Screen name="modal" options={{presentation: 'modal', title: 'Modal'}}/>
+                    <Stack.Screen name="room/[id]" options={{headerShown: false}}/>
                 </Stack>
                 <StatusBar style="auto"/>
-            </Providers>
+            </AppProviders>
         </View>
     );
 }

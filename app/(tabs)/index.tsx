@@ -31,6 +31,12 @@ export default function DiscoverRoomsScreen() {
         search: debouncedSearch,
     });
 
+    const handleJoinRoom = async (roomId: string) => {
+        // todo
+        // call the join room API here
+        // then navigate to the room screen
+    }
+
     const isInitialLoading = isLoading && data.length === 0;
 
     return (
@@ -95,7 +101,12 @@ export default function DiscoverRoomsScreen() {
                         renderItem={({item}) => (
                             <RoomCard
                                 room={item}
-                                onJoin={() => router.push(`/room/${item.id}`,)}
+                                onJoin={() =>
+                                    router.push({
+                                        pathname: `/room/[id]`,
+                                        params: {id: item.id},
+                                    })
+                                }
                             />
                         )}
                         contentContainerStyle={styles.list}
@@ -115,7 +126,7 @@ export default function DiscoverRoomsScreen() {
     );
 }
 
-function RoomsSkeleton() {
+export function RoomsSkeleton() {
     return (
         <View style={styles.skeletonList}>
             {Array.from({length: 6}).map((_, index) => (

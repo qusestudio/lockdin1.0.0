@@ -30,7 +30,7 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
     response => response,
-    async error => {
+    async error =>   {
         console.log("Intercepted error response: ", error);
         const originalRequest = error.config;
 
@@ -43,8 +43,6 @@ api.interceptors.response.use(
 
             const refreshToken = authStore.getState().refreshToken;
 
-            console.log("Refresh token: ", refreshToken);
-
             const response = await authApi.post(
                 `/refresh`,
                 {
@@ -53,8 +51,6 @@ api.interceptors.response.use(
             );
 
             const newAccessToken = response.data.accessToken;
-
-            console.log("New access token: ", newAccessToken);
 
             authStore.getState().setAccessToken(newAccessToken);
 

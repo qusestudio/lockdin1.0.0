@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage, StateStorage } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
+import { Platform } from 'react-native';
 import { User } from '@/src/types/user';
 
 interface AuthState {
@@ -18,8 +19,23 @@ interface AuthActions {
 
 type AuthStore = AuthState & AuthActions;
 
-// SecureStore adapter for Zustand persist middleware
-const secureStorage: StateStorage = {
+const webStorage: StateStorage = {
+  getItem: async (name: string): Promise<string | null> => {
+    return typeof localStorage === 'undefined' ? null : localStorage.getItem(name);
+  },
+  setItem: async (name: string, value: string): Promise<void> => {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(name, value);
+    }
+  },
+  removeItem: async (name: string): Promise<void> => {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(name);
+    }
+  },
+};
+
+const nativeSecureStorage: StateStorage = {
   getItem: async (name: string): Promise<string | null> => {
     try {
       const value = await SecureStore.getItemAsync(name);
@@ -44,6 +60,8 @@ const secureStorage: StateStorage = {
     }
   },
 };
+
+const storage = Platform.OS === 'web' ? webStorage : nativeSecureStorage;
 
 // Create the store with persistence
 export const useAuthStore = create<AuthStore>()(
@@ -80,7 +98,7 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => secureStorage),
+      storage: createJSONStorage(() => storage),
     }
   )
 );
